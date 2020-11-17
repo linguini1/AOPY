@@ -1,5 +1,6 @@
-# Object file
-*.o
+# Bot info
+token.txt
+id.txt
 
-# Ada Library Information
-*.ali
+# Data
+ruby.txt
