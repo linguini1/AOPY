@@ -17,8 +17,8 @@ class Basics(commands.Cog):
     @commands.command()
     @commands.has_role("Mod")
     async def clear(self, ctx, amount: int):
-        if amount > 100:
-            amount = 100
+        if amount > 99:
+            amount = 99
         try:
             await ctx.channel.purge(limit=amount + 1)
         except discord.ext.commands.errors.MissingRequiredArgument:
