@@ -23,8 +23,13 @@ class Ha(commands.Cog):
     @commands.command(hidden=True)
     @commands.check(is_author)
     async def russian(self, ctx):
-        await ctx.send("Привет, меня зовут Дмитри)))))"
+        await ctx.send("Привет, меня зовут Дмитри)))))\n"
                        "Как твои дела?)))")
+
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        if "pog" in message.content.lower() or "poggers" in message.content.lower():
+            await message.add_reaction(":pog:774317093834719263")
 
 
 # Add cog to main bot file
