@@ -78,6 +78,18 @@ class Database(commands.Cog):
     @commands.command()
     async def update_resp(self, ctx, resp: str):
 
+        # Sorting roles
+        roles = []
+        for role in ctx.author.roles:
+            if "Programmer" in role.name:
+                roles.append("Programmer")
+            if "2D Artist" in role.name:
+                roles.append("2D Artist")
+            if "3D Artist" in role.name:
+                roles.append("3D Artist")
+            if "Musician" in role.name:
+                roles.append("Musician")
+
         # Checking to make sure user used quotation marks
         if len(resp.split(" ")) < 2:
             await ctx.send("You probably forgot to put quotes around your responsibility, or it's too short!\n"
@@ -95,7 +107,7 @@ class Database(commands.Cog):
         data_exists = False
         for line in data:
             if str(ctx.author) in line:
-                data[index] = f"{ctx.author} | {resp}\n"
+                data[index] = f"{ctx.author} | {[role for role in roles]} | {resp}\n"
                 data_exists = True
                 break
             index += 1
