@@ -5,15 +5,22 @@ import discord
 from discord.ext import commands
 
 
+# Paths
+rubyPath = "../AOPY/data/ruby.txt"
+respPath = "../AOPY/data/responsibilities.txt"
+
+
 class Database(commands.Cog):
+
     def __init__(self, bot):
         self.bot = bot
 
-    # Events: @commands.Cog.listener()
-    # Commands: @commands.command()
+    """Events: @commands.Cog.listener()
+    Commands: @commands.command()"""
 
     # Record Ruby's Tutorial progress
     @commands.command()
+    @commands.has_role("Programmer")
     async def update_ruby(self, ctx, module: int, step: int):
 
         # Layout of modules and steps
@@ -34,7 +41,7 @@ class Database(commands.Cog):
                 await ctx.send("Invalid step.")
                 return
 
-        with open("../discordBot/data/ruby.txt", "r+") as ruby:
+        with open(rubyPath, "r+") as ruby:
 
             # Recording data in a list
             data = []
@@ -56,7 +63,7 @@ class Database(commands.Cog):
             data.append(f"{ctx.author} | {module}, {step}\n")
 
         # Writing to file
-        with open("../discordBot/data/ruby.txt", "w") as ruby:
+        with open(rubyPath, "w") as ruby:
             for line in data:
                 ruby.write(line)
         await ctx.send("Database updated!")
@@ -64,8 +71,50 @@ class Database(commands.Cog):
     # View Ruby's Tutorial Progress
     @commands.command()
     async def view_ruby(self, ctx):
-        with open("../discordBot/data/ruby.txt", 'r') as ruby:
+        with open(rubyPath, 'r') as ruby:
             await ctx.send(f"```{ruby.read()}```")
+
+    # Record responsibilities
+    @commands.command()
+    async def update_resp(self, ctx, resp: str):
+
+        # Checking to make sure user used quotation marks
+        if len(resp.split(" ")) < 2:
+            await ctx.send("You probably forgot to put quotes around your responsibility, or it's too short!\n"
+                           """Try writing `.update_resp "example responsibility"`""")
+            return
+
+        with open(respPath) as responsibilities:
+            # Recording data in a list
+            data = []
+            for line in responsibilities:
+                data.append(line)
+
+        # Replacing data
+        index = 0
+        data_exists = False
+        for line in data:
+            if str(ctx.author) in line:
+                data[index] = f"{ctx.author} | {resp}\n"
+                data_exists = True
+                break
+            index += 1
+
+        # Adding new line if the database doesn't already contain the user's info
+        if not data_exists:
+            data.append(f"{ctx.author} | {resp}\n")
+
+        # Writing to file
+        with open(respPath, "w") as responsibilities:
+            for line in data:
+                responsibilities.write(line)
+        await ctx.send("Database updated!")
+
+    # View responsibilities
+    @commands.command()
+    async def view_resp(self, ctx):
+        with open(respPath, 'r') as responsibilities:
+            await ctx.send(f"```{responsibilities.read()}```")
 
 
 # Add cog to main bot file
