@@ -2,6 +2,8 @@
 
 # Setup
 import discord
+import time
+import random
 from discord.ext import commands
 
 
@@ -33,7 +35,7 @@ class Ha(commands.Cog):
         if "pog" in message.content.lower() or "poggers" in message.content.lower():
             await message.add_reaction(":pog:774317093834719263")
 
-    # Auto playlist
+    # Auto show playlist reference
     @commands.command(hidden=True)
     @commands.check(is_author)
     async def playlist(self, ctx):
@@ -44,7 +46,7 @@ class Ha(commands.Cog):
                     ["Да Да Да", "https://www.youtube.com/watch?v=gQDmNv86cYw"],
                     ["Мама мы все сощли с ума", "https://www.youtube.com/watch?v=jVlwtapN0yc"],
                     ["Когда твоя девушка больна", "https://www.youtube.com/watch?v=X1TyisQ1bNk"],
-                    ["Группа крови", "https://www.youtube.com/watch?v=xtxjm7ciwmc&t=33s"],
+                    ["Группа крови", "https://www.youtube.com/watch?v=xtxjm7ciwmc"],
                     ["Троллейбус", "https://www.youtube.com/watch?v=eS7ow489tvU"],
                     ["Место для шага вперед", "https://www.youtube.com/watch?v=3MWofo1ohY0"],
                     ["Вкино", "https://www.youtube.com/watch?v=ODUUR-r3z-k"],
@@ -52,21 +54,27 @@ class Ha(commands.Cog):
                     ["Одуванчик", "https://www.youtube.com/watch?v=vqCt-WEA3Fg"],
                     ["Искры", "https://www.youtube.com/watch?v=95PhFfV1I8U"],
                     ["Поболело и прошло", "https://www.youtube.com/watch?v=RMD60YUisxk"],
-                    ["Tas la Touche Manouche", "https://www.youtube.com/watch?v=Aaak_SvPQds"],
+                    ["Tás la Touche Manouche", "https://www.youtube.com/watch?v=Aaak_SvPQds"],
                     ["Fibre de Verre", "https://www.youtube.com/watch?v=XLtvaQMJMGw"],
                     ["Moi Mon Ame et Ma Conscience", "https://www.youtube.com/watch?v=_obZoNHCaI8"],
                     ["Le shift", "https://www.youtube.com/watch?v=nIERsZXXZIw"],
-                    ["Ca ira", "https://www.youtube.com/watch?v=SbEIjUrPXWk"],
+                    ["Ça ira", "https://www.youtube.com/watch?v=SbEIjUrPXWk"],
                     ["99 Luftballons", "https://www.youtube.com/watch?v=hIIVK0NgK38"],
                     ["лбтд", "https://www.youtube.com/watch?v=HhkgVZfls_E"]]
 
-        # Joining vc
-        vc = ctx.author.voice.channel
-        await vc.connect()
+        # Shuffling
+        shuffled = random.sample(playlist, len(playlist))
 
-        # Sending commands
-        for song in playlist:
-            await ctx.send(f"-p {song[1]}")
+        # Printing playlist guide
+        guide = "TITLE                                 | LINK\n"
+        for song in shuffled:
+            title = song[0]
+            link = song[1]
+            spaces = "                                      "
+            guide += f"{title}{spaces[:-len(title)]}: {link}\n"
+
+        await ctx.send(f"```{guide}```")
+
 
 
 # Add cog to main bot file
