@@ -1,7 +1,6 @@
 # Easter egg commands
 
 # Setup
-import discord
 import time
 import random
 from discord.ext import commands

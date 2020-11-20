@@ -1,7 +1,6 @@
 # Database module for bot
 
 # Setup
-import discord
 from discord.ext import commands
 
 
@@ -114,7 +113,7 @@ class Database(commands.Cog):
 
         # Adding new line if the database doesn't already contain the user's info
         if not data_exists:
-            data.append(f"{ctx.author} | {resp}\n")
+            data.append(f"{ctx.author} | {[role for role in roles]} | {resp}\n")
 
         # Writing to file
         with open(respPath, "w") as responsibilities:
