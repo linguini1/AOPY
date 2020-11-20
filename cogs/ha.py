@@ -80,6 +80,11 @@ class Ha(commands.Cog):
 
         await ctx.send(f"```{guide}```")
 
+    # Downtime command for Abdul
+    @commands.command(hidden=True)
+    async def downtime(self, ctx):
+        await ctx.send("Downtime is literally 0s; I'm up and running right now you moron.")
+
 
 # Add cog to main bot file
 def setup(bot):
