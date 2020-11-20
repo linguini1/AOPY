@@ -99,7 +99,9 @@ async def on_ready():
     with open(startTime, 'w') as boot:
         dt = datetime.datetime.now()
         boot.write(f"{dt.year}-{dt.month}-{dt.day}-{dt.hour}-{dt.minute}-{dt.second}")
-    print("Bot is online baby!")
+    print("Bot is online, baby!")
+    log = bot.get_channel(aopyLog)
+    await log.send("Bot is online, baby!")
 
 
 # Running
