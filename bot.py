@@ -2,6 +2,7 @@
 
 # Setup
 import discord
+import datetime
 from discord.ext import commands
 import os
 
@@ -12,12 +13,20 @@ with open("token.txt", 'r') as file:
 # Channels
 aopyLog = 778379334284607518
 
-# Cog Setup
+# Paths
+startTime = "../AOPY/data/startTime.txt"
+
+
+# Author check
+def is_author(ctx):
+    with open("id.txt", 'r') as file:
+        author_id = int(file.read())
+    return author_id == ctx.author.id
 
 
 # Load function
 @bot.command()
-@commands.has_role("Mod")
+@commands.check(is_author)
 async def load(ctx, extension):
     try:
         bot.load_extension(f"cogs.{extension}")
@@ -31,7 +40,7 @@ async def load(ctx, extension):
 
 # Unload function
 @bot.command()
-@commands.has_role("Mod")
+@commands.check(is_author)
 async def unload(ctx, extension):
     try:
         bot.unload_extension(f"cogs.{extension}")
@@ -45,7 +54,7 @@ async def unload(ctx, extension):
 
 # Reload function (to refresh cogs with changes)
 @bot.command()
-@commands.has_role("Mod")
+@commands.check(is_author)
 async def reload(ctx, extension):
     try:
         bot.unload_extension(f"cogs.{extension}")
@@ -67,6 +76,8 @@ async def on_command_error(ctx, error):
         await ctx.send("One or more of your arguments were not of the required type.")
     elif isinstance(error, commands.MissingRole):
         await ctx.send("You don't have permission to use this command.")
+    elif isinstance(error, commands.CheckFailure):
+        await ctx.send("You don't have permission to use this command.")
     else:
         print(f"{error} | Type: {error.__class__}")
         await bot.get_channel(aopyLog).send(f"{error}\nCog: `{ctx.cog.qualified_name}`"
@@ -85,6 +96,9 @@ for filename in os.listdir("./cogs"):
 @bot.event
 async def on_ready():
     await bot.change_presence(status=discord.Status.online, activity=discord.Game("Potato Fields"))
+    with open(startTime, 'w') as boot:
+        dt = datetime.datetime.now()
+        boot.write(f"{dt.year}-{dt.month}-{dt.day}-{dt.hour}-{dt.minute}-{dt.second}")
     print("Bot is online baby!")
 
 

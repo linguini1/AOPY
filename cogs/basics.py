@@ -2,7 +2,11 @@
 
 # Setup
 import discord
+import datetime
 from discord.ext import commands
+
+# Paths
+startTime = "../AOPY/data/startTime.txt"
 
 
 class Basics(commands.Cog):
@@ -28,6 +32,14 @@ class Basics(commands.Cog):
     @commands.command()
     async def ping(self, ctx):
         await ctx.send(f"Latency is {round(self.bot.latency * 1000)}ms.")
+
+    # Uptime
+    @commands.command()
+    async def uptime(self, ctx):
+        with open(startTime, 'r') as start:
+            s = start.read().split('-')
+            boot = datetime.datetime(int(s[0]), int(s[1]), int(s[2]), int(s[3]), int(s[4]))
+        await ctx.send(f"Uptime is {datetime.datetime.now() - boot}.")
 
 
 # Add cog to main bot file
