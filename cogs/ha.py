@@ -31,8 +31,14 @@ class Ha(commands.Cog):
     # Pog reactor
     @commands.Cog.listener()
     async def on_message(self, message):
-        if "pog" in message.content.lower() or "poggers" in message.content.lower():
+        if "pog" in message.content.lower():
             await message.add_reaction(":pog:774317093834719263")
+        if any(_ in message.content.lower() for _ in ["commie", "communist", "communism",
+                                                      "russia", "soviet", "union", "россия",
+                                                      "russophile", "cossack", "stalin", "ussr",
+                                                      "lenin", "putin", "vladimir", "moscow", "siberia",
+                                                      "gulag", "gopnik", "vodka"]):
+            await message.add_reaction(":ussr:772506172611756072")
 
     # Auto show playlist reference
     @commands.command(hidden=True)
@@ -73,7 +79,6 @@ class Ha(commands.Cog):
             guide += f"{title}{spaces[:-len(title)]}: {link}\n"
 
         await ctx.send(f"```{guide}```")
-
 
 
 # Add cog to main bot file

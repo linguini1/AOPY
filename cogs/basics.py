@@ -2,6 +2,7 @@
 
 # Setup
 import datetime
+import math
 from discord.ext import commands
 
 # Paths
@@ -36,8 +37,10 @@ class Basics(commands.Cog):
             s = start.read().split('-')
             boot = datetime.datetime(int(s[0]), int(s[1]), int(s[2]), int(s[3]), int(s[4]))
             uptime = datetime.datetime.now() - boot
-        await ctx.send(f"Uptime is {uptime.days * 24}hr, "
-                       f"{round(uptime.seconds / 60)}min, "
+            hours = uptime.seconds / (60 * 60)
+            minutes = (hours % math.floor(hours)) * 60
+        await ctx.send(f"Uptime is {math.floor(hours)}hr, "
+                       f"{math.floor(minutes)}min, "
                        f"{uptime.seconds % 60}s.")
 
 
