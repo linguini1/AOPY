@@ -37,7 +37,7 @@ class Ha(commands.Cog):
                                                       "russia", "soviet", "union", "россия",
                                                       "russophile", "cossack", "stalin", "ussr",
                                                       "lenin", "putin", "vladimir", "moscow", "siberia",
-                                                      "gulag", "gopnik", "vodka"]):
+                                                      "gulag", "gopnik", "vodka", "slav", "khruschev"]):
             await message.add_reaction(":ussr:772506172611756072")
 
     # Auto show playlist reference
