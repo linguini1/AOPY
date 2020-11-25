@@ -37,10 +37,10 @@ class Basics(commands.Cog):
             s = start.read().split('-')
             boot = datetime.datetime(int(s[0]), int(s[1]), int(s[2]), int(s[3]), int(s[4]))
             uptime = datetime.datetime.now() - boot
-            hours = uptime.seconds / (60 * 60)
-            minutes = math.floor(((hours - math.floor(hours)) * 60) - (uptime.seconds % 60) / 60)
+            hours = uptime.seconds / 3600
+            minutes = (uptime.seconds / 60) % 60
         await ctx.send(f"Uptime is {math.floor(hours)}hr, "
-                       f"{minutes}min, "
+                       f"{math.floor(minutes)}min, "
                        f"{uptime.seconds % 60}s.")
 
 
