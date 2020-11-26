@@ -68,16 +68,28 @@ async def reload(ctx, extension):
 # Error catching
 @bot.event
 async def on_command_error(ctx, error):
+
+    # Command doesn't exist
     if isinstance(error, commands.CommandNotFound):
         await ctx.send("That command doesn't exist, друг.")
+
+    # Missing an argument
     elif isinstance(error, commands.MissingRequiredArgument):
         await ctx.send("You're missing an argument.")
+
+    # Gives an argument of the wrong type
     elif isinstance(error, commands.BadArgument):
         await ctx.send("One or more of your arguments were not of the required type.")
+
+    # Doesn't have the right role to use a specific command
     elif isinstance(error, commands.MissingRole):
         await ctx.send("You don't have permission to use this command.")
+
+    # Doesn't pass the permissions check for an argument
     elif isinstance(error, commands.CheckFailure):
         await ctx.send("You don't have permission to use this command.")
+
+    # Any unexpected errors get recorded in the #aopy-log channel so that they can be assessed
     else:
         print(f"{error} | Type: {error.__class__}")
         await bot.get_channel(aopyLog).send(f"{error}\nCog: `{ctx.cog.qualified_name}`"
@@ -95,11 +107,17 @@ for filename in os.listdir("./cogs"):
 # Booting
 @bot.event
 async def on_ready():
+
+    # Setting status
     await bot.change_presence(status=discord.Status.online, activity=discord.Game("Potato Fields"))
+
+    # Recording the boot time in a text document to be passed to the 'Basics' cog
     with open(startTime, 'w') as boot:
         dt = datetime.datetime.now()
         boot.write(f"{dt.year}-{dt.month}-{dt.day}-{dt.hour}-{dt.minute}-{dt.second}")
     print("Bot is online, baby!")
+
+    # Announcing start in the #aopy-log channel
     log = bot.get_channel(aopyLog)
     await log.send("Bot is online, baby!")
 

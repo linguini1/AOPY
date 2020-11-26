@@ -31,8 +31,12 @@ class Ha(commands.Cog):
     # Pog reactor
     @commands.Cog.listener()
     async def on_message(self, message):
+
+        # Checking if "pog" is in the message
         if "pog" in message.content.lower():
             await message.add_reaction(":pog:774317093834719263")
+
+        # Checking if any of these communist/russia keywords are in the message
         if any(_ in message.content.lower() for _ in ["commie", "communist", "communism",
                                                       "russia", "soviet", "union", "россия",
                                                       "russophile", "cossack", "stalin", "ussr",
@@ -83,7 +87,7 @@ class Ha(commands.Cog):
     # Downtime command for Abdul
     @commands.command(hidden=True)
     async def downtime(self, ctx):
-        await ctx.send("Downtime is literally 0s; I'm up and running right now you moron.")
+        await ctx.send("Downtime is literally 0s; I'm up and running right now, дебил ты.")
 
 
 # Add cog to main bot file

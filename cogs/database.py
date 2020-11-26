@@ -32,9 +32,12 @@ class Database(commands.Cog):
                   [13, 15], [14, 8],
                   [15, 10], [16, 4]]
 
+        # Making sure the module isn't lower than 0 or higher than 16
         if not 0 < module <= 16:
             await ctx.send("Invalid module.")
             return
+
+        # Making sure the step isn't lower than 0 or more than the number of steps in the specific module
         else:
             if not 0 < step <= layout[module - 1][1]:
                 await ctx.send("Invalid step.")
@@ -106,7 +109,7 @@ class Database(commands.Cog):
         data_exists = False
         for line in data:
             if str(ctx.author) in line:
-                data[index] = f"{ctx.author} | {[role for role in roles]} | {resp}\n"
+                data[index] = f"{ctx.author} | {[role for role in roles]} | {resp}\n"  # Format for data input
                 data_exists = True
                 break
             index += 1
