@@ -39,7 +39,8 @@ class Basics(commands.Cog):
             uptime = datetime.datetime.now() - boot
             hours = uptime.seconds / 3600
             minutes = (uptime.seconds / 60) % 60
-        await ctx.send(f"Uptime is {math.floor(hours)}hr, "
+        await ctx.send(f"Uptime is {uptime.days} days, "
+                       f"{math.floor(hours)}hr, "
                        f"{math.floor(minutes)}min, "
                        f"{uptime.seconds % 60}s.")
 
