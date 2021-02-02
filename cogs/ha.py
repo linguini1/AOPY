@@ -1,12 +1,11 @@
 # Easter egg commands
 
 # Setup
-import time
 import random
 from discord.ext import commands
 
 
-# Author check
+# Check if message sender is me (owner of the script)
 def is_author(ctx):
     with open("id.txt", 'r') as file:
         author_id = int(file.read())
