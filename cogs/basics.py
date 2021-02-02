@@ -1,21 +1,30 @@
-# Basic commands
+# Basic, core commands for general use cases
 
 # Setup
 import datetime
 import math
-from discord.ext import commands
+import discord
+from discord.ext import commands, tasks
 
 # Paths
 startTime = "../AOPY/data/startTime.txt"
+
+# Channels
+announcements = 755174545886937221
+
+# Roles
+everyone = 649243272501264404
 
 
 class Basics(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+        self.meeting.start()
 
     # Events: @commands.Cog.listener()
     # Commands: @commands.command()
+    # Tasks: @tasks.loop()
 
     # Clear command
     @commands.command()
@@ -70,6 +79,28 @@ class Basics(commands.Cog):
         # Deals with incorrect input
         else:
             await ctx.send("You didn't give a valid format, дурак.")
+
+    # Announce meetings_
+    @tasks.loop(hours=24)
+    async def meeting(self):
+
+        # Wait until bot is ready
+        await self.bot.wait_until_ready()
+
+        # Important variables
+        day = datetime.datetime.today().weekday()  # Current day
+        channel = self.bot.get_channel(announcements)  # Announcements channel
+        everyonePing = channel.guild.default_role  # @everyone role
+
+        # Meeting today
+        if day == 1 or day == 5:
+            await channel.send(f"{everyonePing}; Meeting today at 4:00PM! "
+                               f"You better make it!")
+
+        # Meeting tomorrow
+        elif day == 0 or day == 4:
+            await channel.send(f"{everyonePing}; Meeting tomorrow at 4:00PM! "
+                               f"Be there or be square!")
 
 
 # Add cog to main bot file
