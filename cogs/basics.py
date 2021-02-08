@@ -3,7 +3,7 @@
 # Setup
 import datetime
 import math
-import discord
+import random
 from discord.ext import commands, tasks
 
 # Paths
@@ -84,6 +84,19 @@ class Basics(commands.Cog):
     @tasks.loop(hours=24)
     async def meeting(self):
 
+        # Remarks
+        remarks = ["Be there ore be square!",
+                   "You better make it! :)"
+                   "Don't be late!",
+                   "Hope to see you there!",
+                   "Bring your thinking cap.",
+                   "BYOP!",
+                   "Last one to join is a missing semicolon!",
+                   "Last one to join is a broken webhook!",
+                   "Don't forget to brush your teeth!",
+                   "Make sure your text editor is up to date!",
+                   "Dress code: semi-gamer."]
+
         # Wait until bot is ready
         await self.bot.wait_until_ready()
 
@@ -95,12 +108,12 @@ class Basics(commands.Cog):
         # Meeting today
         if day == 1 or day == 5:
             await channel.send(f"{everyonePing}; Meeting today at 4:00PM! "
-                               f"You better make it!")
+                               f"{random.choice(remarks)}")
 
         # Meeting tomorrow
         elif day == 0 or day == 4:
             await channel.send(f"{everyonePing}; Meeting tomorrow at 4:00PM! "
-                               f"Be there or be square!")
+                               f"{random.choice(remarks)}")
 
 
 # Add cog to main bot file
