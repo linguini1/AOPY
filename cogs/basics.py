@@ -85,7 +85,7 @@ class Basics(commands.Cog):
     async def meeting(self):
 
         # Remarks
-        remarks = ["Be there ore be square!",
+        remarks = ["Be there or be square!",
                    "You better make it! :)"
                    "Don't be late!",
                    "Hope to see you there!",
