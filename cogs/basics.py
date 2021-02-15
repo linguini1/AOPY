@@ -81,7 +81,7 @@ class Basics(commands.Cog):
             await ctx.send("You didn't give a valid format, дурак.")
 
     # Announce meetings_
-    @tasks.loop(hours=24)
+    @tasks.loop(hours=1)
     async def meeting(self):
 
         # Remarks
@@ -102,18 +102,22 @@ class Basics(commands.Cog):
 
         # Important variables
         day = datetime.datetime.today().weekday()  # Current day
+        currentTime = datetime.datetime.today().time()
         channel = self.bot.get_channel(announcements)  # Announcements channel
         everyonePing = channel.guild.default_role  # @everyone role
 
-        # Meeting today
-        if day == 1 or day == 5:
-            await channel.send(f"{everyonePing}; Meeting today at 4:00PM! "
-                               f"{random.choice(remarks)}")
+        # Between 12:00 and 1:00
+        if datetime.time(12) < currentTime < datetime.time(13):
 
-        # Meeting tomorrow
-        elif day == 0 or day == 4:
-            await channel.send(f"{everyonePing}; Meeting tomorrow at 4:00PM! "
-                               f"{random.choice(remarks)}")
+            # Meeting today
+            if day == 1 or day == 5:
+                await channel.send(f"{everyonePing}; Meeting today at 4:00PM! "
+                                   f"{random.choice(remarks)}")
+
+            # Meeting tomorrow
+            elif day == 0 or day == 4:
+                await channel.send(f"{everyonePing}; Meeting tomorrow at 4:00PM! "
+                                   f"{random.choice(remarks)}")
 
 
 # Add cog to main bot file
