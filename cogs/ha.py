@@ -59,7 +59,11 @@ class Ha(commands.Cog):
         guide = ""
 
         for title, link in playlist:
-            gap = [" " for _ in range(30 - len(title))]
+
+            gap = ""
+            for _ in range(30 - len(title)):
+                gap += " "
+
             line = f"{title}{gap} | {link}\n"
             guide += line
 
