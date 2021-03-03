@@ -89,6 +89,14 @@ async def on_command_error(ctx, error):
     elif isinstance(error, commands.CheckFailure):
         await ctx.send("You don't have permission to use this command.")
 
+    # Doesn't have permission to carry out a function
+    elif isinstance(error, discord.errors.Forbidden):
+        print(f"{error} | Type: {error.__class__}")
+        await bot.get_channel(aopyLog).send(f"{error}\nCog: `{ctx.cog.qualified_name}`"
+                                            f"\nType: `{error.__class__}`"
+                                            f"\nCommand: `{ctx.command.name}`"
+                                            f"\nMessage was: ```{ctx.message.content}```")
+
     # Any unexpected errors get recorded in the #aopy-log channel so that they can be assessed
     else:
         print(f"{error} | Type: {error.__class__}")
