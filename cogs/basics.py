@@ -106,8 +106,8 @@ class Basics(commands.Cog):
         channel = self.bot.get_channel(announcements)  # Announcements channel
         everyonePing = channel.guild.default_role  # @everyone role
 
-        # Between 12:00 and 1:00
-        if datetime.time(12) < currentTime < datetime.time(13):
+        # Between 2:00 and 3:00
+        if datetime.time(14) < currentTime < datetime.time(15):
 
             # Meeting today
             if day == 1 or day == 5:
